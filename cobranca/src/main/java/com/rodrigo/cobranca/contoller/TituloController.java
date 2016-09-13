@@ -19,6 +19,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.rodrigo.cobranca.enuns.StatusTituloEnum;
 import com.rodrigo.cobranca.model.Titulo;
+import com.rodrigo.cobranca.repository.filter.TituloFiltro;
 import com.rodrigo.cobranca.service.CadastroTituloService;
 
 
@@ -80,9 +81,9 @@ public class TituloController {
 	}
 	
 	@RequestMapping
-	public ModelAndView pesquisar(){
-		ModelAndView mv = new ModelAndView("PesquisaTitulos");
-		List<Titulo> todosTitulos = this.cadastroTituloService.buscarTodos();
+	public ModelAndView pesquisar(@ModelAttribute("filtro") TituloFiltro filtro){
+		ModelAndView mv = new ModelAndView("PesquisaTitulos");		
+		List<Titulo> todosTitulos = cadastroTituloService.buscarPorDescricao(filtro);
 		mv.addObject("titulos", todosTitulos);
 		return mv;
 	}

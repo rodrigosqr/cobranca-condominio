@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import com.rodrigo.cobranca.enuns.StatusTituloEnum;
 import com.rodrigo.cobranca.model.Titulo;
 import com.rodrigo.cobranca.repository.ITitulos;
+import com.rodrigo.cobranca.repository.filter.TituloFiltro;
 
 @Service
 public class CadastroTituloService {
@@ -37,5 +38,10 @@ public class CadastroTituloService {
 		titulo.setStatus(StatusTituloEnum.RECEBIDO);
 		
 		this.titulos.save(titulo);
+	}
+	
+	public List<Titulo> buscarPorDescricao(TituloFiltro filtro){
+		String descricao = filtro.getDescricao() == null ? "%" : filtro.getDescricao();
+		return this.titulos.findByDescricaoContaining(descricao);
 	}
 }
